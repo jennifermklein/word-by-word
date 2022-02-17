@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <header>
+      <h1>Past Stories</h1>
+    </header>
+    <div class='stories'>
+        {% for story in stories %}
+          <h2>Story {{story}}</h2>
+          <p>{{' '.join(stories[story])}}<p>
+        {% endfor %}
+    </div>
+{% endblock %}
