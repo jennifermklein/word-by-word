@@ -47,7 +47,7 @@ def index():
         if request.form.get("end_story"):
             archive_story(currStory)
             currStory += 1
-            return redirect("/archive")
+            return redirect("/title")
 
         return redirect("/")
 
@@ -73,6 +73,33 @@ def archive():
     stories_from_db = cur.execute('SELECT * FROM stories').fetchall()
     archived_stories = {}
     for row in stories_from_db:
-        archived_stories[row[0]] = {'title': row[1], 'content': row[2]}
+        archived_stories[row[3]] = {'title': row[1], 'content': row[2]}
 
     return render_template('archive.html',stories=archived_stories)
+
+# page to add title after ending a story
+@app.route('/title', methods=["GET","POST"])
+def title():
+
+    global currStory
+    db = connect()
+    cur = db.cursor()
+
+    if request.method == "POST":
+        # add title to stories database
+        if request.form.get("add_title"):
+            cur.execute('UPDATE stories SET title=? WHERE id=?;',(request.form.get("add_title"),currStory-1))
+            db.commit()
+
+        return redirect("/archive")
+
+    # query current story from database
+    words_from_db = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(currStory-1),)).fetchall()
+
+    # create string from queried words
+    words = []
+    for word in words_from_db:
+        words.append(str(word)[2:-3])
+    STORY = ' '.join(words)
+
+    return render_template('title.html', story=STORY)

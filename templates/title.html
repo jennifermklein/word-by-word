@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <header>
+      <h1>
+      <form action="/title" id="title" method="post">
+        <input autocomplete="off" autofocus='autofocus' id="add_title" name="add_title" type="text" placeholder='Add Title'>
+      </form>
+      <h1>
+    </header>
+    <div class='story'>
+        <span>{{story}}</span>
+    </div>
+{% endblock %}
