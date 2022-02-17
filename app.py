@@ -4,8 +4,9 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import sqlite3
 import enchant
-from helpers import connect, get_current_story, same_session
+from helpers import connect, get_current_story, same_session, archive_story
 
+# configure app
 app = Flask(__name__)
 
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -14,25 +15,6 @@ Session(app)
 # global vars
 currStory = get_current_story()
 dictionary = enchant.Dict("en_US")
-
-# add story to database
-def archive_story(story_num):
-    thisStory = story_num # replace with currStory here and below
-
-    # connect to database
-    db = connect()
-    cur = db.cursor()
-
-    # format story into string
-    words_from_db = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(thisStory),)).fetchall()
-    words = []
-    for word in words_from_db:
-        words.append(str(word)[2:-3])
-    STORY = ' '.join(words)
-
-    # insert story into story table
-    cur.execute('INSERT INTO stories (title,story_content) VALUES(?,?);',('Title',STORY))
-    db.commit()
 
 # home page where user can see current story, submit new word, and end the story
 @app.route('/', methods=["GET","POST"])
@@ -88,11 +70,9 @@ def archive():
     global currStory
 
     # create dictionary from query of previous stories
+    stories_from_db = cur.execute('SELECT * FROM stories').fetchall()
     archived_stories = {}
-    for story in range(currStory-1,0,-1):
-        testwords = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(story),)).fetchall()
-        archived_stories[story] = []
-        for word in testwords:
-            archived_stories[story].append(str(word)[2:-3])
+    for row in stories_from_db:
+        archived_stories[row[0]] = {'title': row[1], 'content': row[2]}
 
     return render_template('archive.html',stories=archived_stories)
