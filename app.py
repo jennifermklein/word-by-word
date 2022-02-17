@@ -69,7 +69,7 @@ def archive():
 
     # create dictionary from query of previous stories
     archived_stories = {}
-    for story in range(1,currStory):
+    for story in range(currStory-1,0,-1):
         testwords = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(story),)).fetchall()
         archived_stories[story] = []
         for word in testwords:
