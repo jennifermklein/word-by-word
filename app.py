@@ -15,6 +15,25 @@ Session(app)
 currStory = get_current_story()
 dictionary = enchant.Dict("en_US")
 
+# add story to database
+def archive_story(story_num):
+    thisStory = story_num # replace with currStory here and below
+
+    # connect to database
+    db = connect()
+    cur = db.cursor()
+
+    # format story into string
+    words_from_db = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(thisStory),)).fetchall()
+    words = []
+    for word in words_from_db:
+        words.append(str(word)[2:-3])
+    STORY = ' '.join(words)
+
+    # insert story into story table
+    cur.execute('INSERT INTO stories (title,story_content) VALUES(?,?);',('Title',STORY))
+    db.commit()
+
 # home page where user can see current story, submit new word, and end the story
 @app.route('/', methods=["GET","POST"])
 def index():
@@ -44,6 +63,7 @@ def index():
         
         # start new story
         if request.form.get("end_story"):
+            archive_story(currStory)
             currStory += 1
             return redirect("/archive")
 
