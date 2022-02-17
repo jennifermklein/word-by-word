@@ -4,35 +4,16 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import sqlite3
 import enchant
+from helpers import connect, get_current_story, same_session
 
 app = Flask(__name__)
 
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-# helper functions
-# connect to database
-def connect():
-    return sqlite3.connect('test.db')
-
-# query highest story id in table and assign to currStory
-def get_current_story():
-    cur = connect().cursor()
-    return int(str(cur.execute('SELECT MAX(story_id) FROM words;').fetchall()[0])[1:-2])
-
 # global vars
 currStory = get_current_story()
 dictionary = enchant.Dict("en_US")
-
-# check if user session is the same as previously submitted word
-def same_session():
-    # connect to database
-    db = connect()
-    cur = db.cursor()
-
-    last_session = str(cur.execute('SELECT session_id FROM words WHERE id=(SELECT MAX(id) FROM words);').fetchall()[0])[2:-3]
-
-    return session.sid == last_session
 
 # home page where user can see current story, submit new word, and end the story
 @app.route('/', methods=["GET","POST"])
