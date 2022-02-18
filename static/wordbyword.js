@@ -34,8 +34,21 @@ document.addEventListener('DOMContentLoaded',function() {
                 // handle error
                 console.log(error);
             })
+        // if (event.code === 'Enter') {
+        //     axios.get('/dict_error')
+        //     .then(function(response) {
+        //         if (response.data === 'False') {
+        //             errorMessage.style.display = 'inline';
+        //             errorMessage.innerHTML = "Word not found in dictionary";
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         // handle error
+        //         console.log(error);
+        //     })
+        // }
     })
-
+    
     // endStory.addEventListener('click',function(event){
     //     axios.get('/session_error')
     //         .then(function(response) {
@@ -49,11 +62,5 @@ document.addEventListener('DOMContentLoaded',function() {
     //             console.log(error);
     //         })
     // })
-
 });
-
-
-      // if (event.code === 'Enter') {
-        //     document.querySelector('.buttons').style.backgroundColor = 'red';
-        // }
 

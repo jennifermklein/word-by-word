@@ -52,9 +52,9 @@ def story():
 def session_error():
     return str(same_session())
 
-# @app.route('/dictionary_error', methods=["GET","POST"])
-# def dictionary_error():
-#     return #
+@app.route('/dict_error', methods=["GET","POST"])
+def dict_error():
+    return str(insert_word(request.form.get("add_word"),currStory))
 
 # page displaying previous stories
 @app.route('/archive', methods=["GET","POST"])
