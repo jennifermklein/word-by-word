@@ -89,9 +89,9 @@ def title():
 
     return render_template('title.html', story=get_current_story(currStory-1))
 
-# # about page
-# @app.route('/about', methods=["GET"])
-# def about():
-#     return render_template('about.html')
+# about page
+@app.route('/about', methods=["GET"])
+def about():
+    return render_template('about.html')
 
     
