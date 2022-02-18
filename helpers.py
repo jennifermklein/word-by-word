@@ -50,10 +50,11 @@ def same_session():
 
 # add word to database, return false if word rejected
 def insert_word(word, story_num):
-    global currStory
+    if not word:
+        return False
+    
     db = connect()
     cur = db.cursor()
-
     dictionary = enchant.Dict("en_US")
 
     check_word = word.strip(' .,?:;-"!')
