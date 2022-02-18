@@ -4,7 +4,7 @@ import os
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import sqlite3
-import enchant
+# import enchant
 
 # connect to database
 def connect():
@@ -55,14 +55,17 @@ def insert_word(word, story_num):
     
     db = connect()
     cur = db.cursor()
-    dictionary = enchant.Dict("en_US")
+    # dictionary = enchant.Dict("en_US")
 
-    check_word = word.strip(' .,?:;-"!')
-    if check_word and (dictionary.check(check_word) or check_word.isnumeric()):
-        cur.execute('INSERT INTO words (word,session_id,story_id) VALUES(?,?,?);',(word,session.sid,story_num))
-        db.commit()
-        return True
-    return False
+    # check_word = word.strip(' .,?:;-"!')
+    # if check_word and (dictionary.check(check_word) or check_word.isnumeric()):
+    #     cur.execute('INSERT INTO words (word,session_id,story_id) VALUES(?,?,?);',(word,session.sid,story_num))
+    #     db.commit()
+    #     return True
+    # return False
+    cur.execute('INSERT INTO words (word,session_id,story_id) VALUES(?,?,?);',(word,session.sid,story_num))
+    db.commit()
+    return True
 
 # add story to database
 def archive_story(story_num):
