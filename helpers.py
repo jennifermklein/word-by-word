@@ -10,10 +10,9 @@ def connect():
     return sqlite3.connect('test.db')
 
 # query highest story id in table and assign to currStory
-def get_current_story():
+def get_current_story_num():
     
     cur = connect().cursor()
-
     max_story = cur.execute('SELECT MAX(story_id) FROM stories;').fetchall()[0][0]
 
     if (max_story):
@@ -21,7 +20,20 @@ def get_current_story():
         return max_story
 
     return 1
-    
+
+# return current story as a string
+def get_current_story():
+    # query current story from database
+    cur = connect().cursor()
+    words_from_db = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(currStory),)).fetchall()
+
+    # create string from queried words
+    words = []
+    for word in words_from_db:
+        words.append(str(word)[2:-3])
+    story = ' '.join(words)
+
+    return story
 
 # check if user session is the same as previously submitted word
 def same_session():

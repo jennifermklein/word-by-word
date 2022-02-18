@@ -4,7 +4,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import sqlite3
 import enchant
-from helpers import connect, get_current_story, same_session, archive_story
+from helpers import connect, get_current_story, get_current_story_num, same_session, archive_story
 
 # configure app
 app = Flask(__name__)
@@ -13,8 +13,9 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # global vars
-currStory = get_current_story()
+currStory = get_current_story_num()
 dictionary = enchant.Dict("en_US")
+
 
 # home page where user can see current story, submit new word, and end the story
 @app.route('/', methods=["GET","POST"])
@@ -51,20 +52,19 @@ def index():
 
         return redirect("/")
 
-    # query current story from database
-    words_from_db = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(currStory),)).fetchall()
+    return render_template('index.html', story=get_current_story())
 
-    # create string from queried words
-    words = []
-    for word in words_from_db:
-        words.append(str(word)[2:-3])
-    STORY = ' '.join(words)
+# @app.route('/story', methods=["GET"])
+# def story():
+#     # Get the current story from the database
+#     # Return the story as a string
+#     pass
 
-    return render_template('index.html', story=STORY)
 
 # page displaying previous stories
 @app.route('/archive', methods=["GET","POST"])
 def archive():
+    print('debug statement')
 
     cur = connect().cursor()
     global currStory
