@@ -3,8 +3,7 @@ import os
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import sqlite3
-import enchant
-from helpers import connect, get_current_story, get_current_story_num, same_session, archive_story
+from helpers import connect, get_current_story, get_current_story_num, same_session, insert_word, archive_story
 
 # configure app
 app = Flask(__name__)
@@ -14,14 +13,12 @@ Session(app)
 
 # global vars
 currStory = get_current_story_num()
-dictionary = enchant.Dict("en_US")
 
 # home page showing current story. user can submit new word or end the story
 @app.route('/', methods=["GET","POST"])
 def index():
 
     global currStory
-    global dictionary
     db = connect()
     cur = db.cursor()
 
@@ -33,13 +30,8 @@ def index():
             return redirect("/")
 
         # if word submitted, verify validity and add to database
-        if request.form.get("add_word"):
-            NEW_WORD = request.form.get("add_word").strip()
-            check_word = NEW_WORD.strip('.,?:;-"!')
-            if check_word and (dictionary.check(check_word) or check_word.isnumeric()):
-                cur.execute('INSERT INTO words (word,session_id,story_id) VALUES(?,?,?);',(NEW_WORD,session.sid,currStory))
-                db.commit()
-                return redirect("/")
+        if (insert_word(request.form.get("add_word"),currStory)):
+            return redirect("/")
         
         # start new story
         if request.form.get("end_story") and get_current_story(currStory):

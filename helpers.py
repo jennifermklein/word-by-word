@@ -4,6 +4,7 @@ import os
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import sqlite3
+import enchant
 
 # connect to database
 def connect():
@@ -45,6 +46,21 @@ def same_session():
         last_session = last_session[0][0]
         return session.sid == last_session
 
+    return False
+
+# add word to database, return false if word rejected
+def insert_word(word, story_num):
+    global currStory
+    db = connect()
+    cur = db.cursor()
+
+    dictionary = enchant.Dict("en_US")
+
+    check_word = word.strip(' .,?:;-"!')
+    if check_word and (dictionary.check(check_word) or check_word.isnumeric()):
+        cur.execute('INSERT INTO words (word,session_id,story_id) VALUES(?,?,?);',(word,session.sid,story_num))
+        db.commit()
+        return True
     return False
 
 # add story to database
