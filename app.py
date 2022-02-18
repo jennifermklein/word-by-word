@@ -52,7 +52,7 @@ def index():
 
         return redirect("/")
 
-    return render_template('index.html', story=get_current_story())
+    return render_template('index.html', story=get_current_story(currStory))
 
 # @app.route('/story', methods=["GET"])
 # def story():

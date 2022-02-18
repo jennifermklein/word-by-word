@@ -22,15 +22,15 @@ def get_current_story_num():
     return 1
 
 # return current story as a string
-def get_current_story():
+def get_current_story(story_num):
     # query current story from database
     cur = connect().cursor()
-    words_from_db = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(currStory),)).fetchall()
+    words_from_db = cur.execute('SELECT word FROM words WHERE story_id=?;',(story_num,)).fetchall()
 
     # create string from queried words
     words = []
     for word in words_from_db:
-        words.append(str(word)[2:-3])
+        words.append(word[0])
     story = ' '.join(words)
 
     return story
