@@ -56,6 +56,14 @@ def story():
     # Get the current story from the database
     return get_current_story(currStory)
 
+@app.route('/session_error', methods=["GET","POST"])
+def session_error():
+    return str(same_session())
+
+# @app.route('/dictionary_error', methods=["GET","POST"])
+# def dictionary_error():
+#     return #
+
 # page displaying previous stories
 @app.route('/archive', methods=["GET","POST"])
 def archive():

@@ -75,6 +75,22 @@ button:hover {
     color: rgb(0,100,100);
   }
 
+.error {
+    margin: -80px auto auto auto;
+    width: 300px;
+    text-align: center;
+    background-color: rgb(230, 220, 210);
+}
+
+.error > p {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #D8000C;
+    background-color: #FFD2D2;
+    text-indent: 0%;
+    padding: 8px;
+    box-shadow: 1px 1px 1px rgb(100, 125, 125);
+}
+
 /* .stories button {
     height: 110px;
     width: 85px;
@@ -83,12 +99,19 @@ button:hover {
 
 .about {
     background-color: rgba(250,255,250,.6);
-    margin: 50px 150px 0px 150px;
-    padding: 5px 20px 5px 20px;
+    max-width: 50%;
+    min-width: 350px;
+    margin: 50px auto auto auto;
+    padding: 2px 20px 5px 20px;
+}
+
+h3 {
+    font-size: 24px;
 }
 
 .about > p {
     text-indent: 0%;
+    font-size: 20px;
 }
 
 a {
@@ -149,3 +172,20 @@ footer > p {
     margin: 0px;
     font-size: 12px;
 }
+
+/* @media (max-device-width:768px) {
+    .about {
+        font-size: 16px;
+        min-width: none;
+        max-width: none;
+    }
+}
+
+@media (max-device-width:852px) {
+    .about {
+        margin: 20px;
+        min-width: 100px;
+        max-width: 90%;
+        font-size: 16px;
+    }
+} */
