@@ -16,15 +16,12 @@ Session(app)
 currStory = get_current_story_num()
 dictionary = enchant.Dict("en_US")
 
-
-# home page where user can see current story, submit new word, and end the story
+# home page showing current story. user can submit new word or end the story
 @app.route('/', methods=["GET","POST"])
 def index():
 
     global currStory
     global dictionary
-
-    # connect to database
     db = connect()
     cur = db.cursor()
 
@@ -38,7 +35,7 @@ def index():
         # if word submitted, verify validity and add to database
         if request.form.get("add_word"):
             NEW_WORD = request.form.get("add_word").strip()
-            check_word = NEW_WORD.strip('.,?:;-"')
+            check_word = NEW_WORD.strip('.,?:;-"!')
             if check_word and (dictionary.check(check_word) or check_word.isnumeric()):
                 cur.execute('INSERT INTO words (word,session_id,story_id) VALUES(?,?,?);',(NEW_WORD,session.sid,currStory))
                 db.commit()
@@ -54,17 +51,14 @@ def index():
 
     return render_template('index.html', story=get_current_story(currStory))
 
-# @app.route('/story', methods=["GET"])
-# def story():
-#     # Get the current story from the database
-#     # Return the story as a string
-#     pass
-
+@app.route('/story', methods=["GET"])
+def story():
+    # Get the current story from the database
+    return get_current_story(currStory)
 
 # page displaying previous stories
 @app.route('/archive', methods=["GET","POST"])
 def archive():
-    print('debug statement')
 
     cur = connect().cursor()
     global currStory
@@ -93,13 +87,11 @@ def title():
 
         return redirect("/archive")
 
-    # query current story from database
-    words_from_db = cur.execute('SELECT word FROM words WHERE story_id=?;',(str(currStory-1),)).fetchall()
+    return render_template('title.html', story=get_current_story(currStory-1))
 
-    # create string from queried words
-    words = []
-    for word in words_from_db:
-        words.append(str(word)[2:-3])
-    STORY = ' '.join(words)
+# # about page
+# @app.route('/about', methods=["GET"])
+# def about():
+#     return render_template('about.html')
 
-    return render_template('title.html', story=STORY)
+    

@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded',function() {
+    const story = document.querySelector('#curr_story');
     
-    document.querySelector('#newPara').addEventListener("click", function() {
-        const labelNode = document.createElement('label');
-        labelNode.innerHTML = 'test';
-        words += '<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-        storyText.innerHTML = words;
-        submitWord.focus();
-    });
+    function updateStory () {
+        axios.get('/story')
+            .then(function(response) {
+                story.innerHTML = response.data;
+            })
+    }
+    
+    setInterval(updateStory, 500);
 
 });
+
