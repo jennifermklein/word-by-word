@@ -4,6 +4,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import sqlite3
 from helpers import connect, get_current_story, get_current_story_num, same_session, insert_word, archive_story
+import psycopg2
 
 # configure app
 app = Flask(__name__)
@@ -13,6 +14,7 @@ Session(app)
 
 # global vars
 currStory = get_current_story_num()
+print('CURRENT STORY: ', currStory)
 
 # home page showing current story. user can submit new word or end the story
 @app.route('/', methods=["GET","POST"])
@@ -26,7 +28,7 @@ def index():
 
         # reject if same user takes more than one action in a row
         if same_session():
-            # add error message?
+            # add error message
             return redirect("/")
 
         # if word submitted, verify validity and add to database
@@ -64,10 +66,11 @@ def archive():
     global currStory
 
     # create dictionary from query of previous stories
-    stories_from_db = cur.execute('SELECT * FROM stories').fetchall()
+    cur.execute('SELECT * FROM stories WHERE id!=(SELECT MAX(id) FROM stories)')
+    stories_from_db = cur.fetchall()
     archived_stories = {}
     for row in stories_from_db:
-        archived_stories[row[3]] = {'title': row[1], 'content': row[2]}
+        archived_stories[row[3]] = {'datetime': row[1],'title': row[2], 'content': row[3]}
 
     return render_template('archive.html',stories=archived_stories)
 
@@ -82,7 +85,7 @@ def title():
     if request.method == "POST":
         # add title to stories database
         if request.form.get("add_title"):
-            cur.execute('UPDATE stories SET title=? WHERE id=?;',(request.form.get("add_title"),currStory-1))
+            cur.execute('UPDATE stories SET title=%s WHERE id=%s;',(request.form.get("add_title"),currStory-1))
             db.commit()
 
         return redirect("/archive")
