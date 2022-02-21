@@ -1,9 +1,9 @@
 import os
 
+import datetime
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import psycopg2
-import datetime
 # import enchant
 
 # connect to database
