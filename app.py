@@ -18,7 +18,7 @@ currStory = get_current_story_num()
 @app.route('/', methods=["GET","POST"])
 def index():
 
-    global currStory
+    currStory = get_current_story_num()
     db = connect()
     cur = db.cursor()
 
