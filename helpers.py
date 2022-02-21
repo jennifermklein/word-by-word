@@ -9,17 +9,17 @@ import datetime
 
 # connect to database
 def connect():
-    db = psycopg2.connect(host='localhost',
-                        database='postgres',
-                        user=os.environ['DB_USERNAME'],
-                        password=os.environ['DB_PASSWORD'])
+    db = psycopg2.connect(os.environ['DATABASE_URL'])
+    # db = psycopg2.connect(host='localhost',
+    #                     database='postgres',
+    #                     user=os.environ['DB_USERNAME'],
+    #                     password=os.environ['DB_PASSWORD'])
     return db
 
 # query highest story id in table and assign to currStory
 def get_current_story_num():
-    
     cur = connect().cursor()
-    cur.execute('SELECT MAX(id) FROM stories;')#.fetchall()[0][0]
+    cur.execute('SELECT MAX(id) FROM stories;')
     max_story = cur.fetchall()[0][0]
     if (max_story):
         return max_story
@@ -28,8 +28,8 @@ def get_current_story_num():
 
 # check if user session is the same as previously submitted word
 def same_session():
-    db = connect()
-    cur = db.cursor()
+    # db = connect()
+    cur = connect().cursor()
 
     cur.execute('SELECT session_id FROM words WHERE id=(SELECT MAX(id) FROM words);')
     last_session = cur.fetchall()

@@ -25,6 +25,7 @@ main {
 .story {
     min-height: 100px;
     text-indent: 10%;
+    /* position: relative; */
 }
 
 p {
@@ -45,11 +46,18 @@ input {
     font-family: 'Courier New', Courier, monospace;
     font-size: 22px;
     color: rgb(75, 75, 75);
+    /* position: relative; */
 }
 
 input:focus {
     outline: none;
 }
+
+/* #position {
+    position: absolute;
+    top: 0;
+    left: -10;
+} */
 
 .buttons {
     text-align: right;

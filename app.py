@@ -2,19 +2,17 @@ import os
 
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
-import sqlite3
+# import sqlite3
 from helpers import connect, get_current_story, get_current_story_num, same_session, insert_word, archive_story
-import psycopg2
+# import psycopg2
 
 # configure app
 app = Flask(__name__)
-
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # global vars
 currStory = get_current_story_num()
-print('CURRENT STORY: ', currStory)
 
 # home page showing current story. user can submit new word or end the story
 @app.route('/', methods=["GET","POST"])
@@ -48,7 +46,8 @@ def index():
 @app.route('/story', methods=["GET"])
 def story():
     # Get the current story from the database
-    return get_current_story(currStory)
+    # global currStory
+    return get_current_story(get_current_story_num())
 
 @app.route('/session_error', methods=["GET","POST"])
 def session_error():
