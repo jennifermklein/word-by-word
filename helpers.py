@@ -58,7 +58,7 @@ def insert_word(word, story_num):
     # dictionary = enchant.Dict("en_US")
 
     check_word = word.strip(' .,?:;-"!')
-    if check_word: #and (dictionary.check(check_word) or check_word.isnumeric()):
+    if check_word and (not ' ' in check_word): #and (dictionary.check(check_word) or check_word.isnumeric()):
         cur.execute('INSERT INTO words (word,session_id,story_id) VALUES(%s,%s,%s);',(word,session.sid,story_num))
         db.commit()
         return True
