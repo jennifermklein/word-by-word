@@ -36,7 +36,7 @@ def index():
         # start new story
         if request.form.get("end_story") and get_current_story(currStory):
             archive_story(currStory)
-            currStory += 1
+            # currStory += 1
             return redirect("/title")
 
         return redirect("/")
