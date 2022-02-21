@@ -2,7 +2,6 @@ import os
 
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
-import sqlite3
 import psycopg2
 import datetime
 # import enchant
@@ -10,10 +9,6 @@ import datetime
 # connect to database
 def connect():
     db = psycopg2.connect(os.environ['DATABASE_URL'])
-    # db = psycopg2.connect(host='localhost',
-    #                     database='postgres',
-    #                     user=os.environ['DB_USERNAME'],
-    #                     password=os.environ['DB_PASSWORD'])
     return db
 
 # query highest story id in table and assign to currStory
@@ -28,13 +23,11 @@ def get_current_story_num():
 
 # check if user session is the same as previously submitted word
 def same_session():
-    # db = connect()
     cur = connect().cursor()
 
     cur.execute('SELECT session_id FROM words WHERE id=(SELECT MAX(id) FROM words);')
     last_session = cur.fetchall()
     if (last_session):
-        # last_session = last_session[0][0]
         return session.sid == last_session[0][0]
 
     return False

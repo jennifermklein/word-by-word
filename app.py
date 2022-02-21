@@ -77,19 +77,19 @@ def archive():
 @app.route('/title', methods=["GET","POST"])
 def title():
 
-    global currStory
+    # global currStory
     db = connect()
     cur = db.cursor()
 
     if request.method == "POST":
         # add title to stories database
         if request.form.get("add_title"):
-            cur.execute('UPDATE stories SET title=%s WHERE id=%s;',(request.form.get("add_title"),currStory-1))
+            cur.execute('UPDATE stories SET title=%s WHERE id=%s;',(request.form.get("add_title"),get_current_story_num()-1))
             db.commit()
 
         return redirect("/archive")
 
-    return render_template('title.html', story=get_current_story(currStory-1))
+    return render_template('title.html', story=get_current_story(get_current_story_num()-1))
 
 # about page
 @app.route('/about', methods=["GET"])
