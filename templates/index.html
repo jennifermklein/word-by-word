@@ -14,11 +14,13 @@
     <header>
       <h1>Word by Word</h1>
     </header>
+    <div class="error2">
+      <p id="apology2">Type a single word and press enter to submit</p>
+    </div>
     <div class='story'>
         <span id='curr_story'>{{story}}</span>
         <form action="/" id="add_word" method="post">
           <input autocomplete="off" autofocus='autofocus' name="add_word" type="text">
-          <!-- <p id="position">TEST</p> -->
         </form>
     </div>
     <div class='buttons'>
@@ -26,7 +28,7 @@
         <button name='end_story' id='end_story' value='end_story'>end story</button>
         </form>
     </div>
-    <div class="error">
+    <!-- <div class="error">
       <p hidden id="apology"></p>
-    </div>
+    </div> -->
 {% endblock %}
