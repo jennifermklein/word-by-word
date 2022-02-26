@@ -17,7 +17,7 @@
     <div class='stories'>
         {% for story in stories|reverse %}
           <h2>{{stories[story].title}}</h2>
-          <!-- <p>{{stories[story].datetime}}<p></p> -->
+          <p class="date">{{stories[story].datetime}}</p>
           <p>{{stories[story].content}}<p>
         {% endfor %}
     </div>

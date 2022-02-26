@@ -80,7 +80,7 @@ def archive_story(story_num):
     STORY = ' '.join(words)
 
     # insert story into story table and make a new blank story
-    cur.execute('UPDATE stories SET date_time=%s, story_content=%s WHERE id=%s;',(datetime.datetime.now(),STORY,story_num))
+    cur.execute('UPDATE stories SET date_time=%s, story_content=%s WHERE id=%s;',(datetime.datetime.now().strftime("%B %d, %Y"),STORY,story_num))
     cur.execute('INSERT INTO stories (date_time, title, story_content) VALUES (null, null, null);')
     # cur.execute('INSERT INTO stories (id) VALUES(%s);',(story_num+1,))
     db.commit()
