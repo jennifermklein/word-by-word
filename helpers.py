@@ -36,7 +36,7 @@ def same_session():
 def get_current_story(story_num):
     # query current story from database
     cur = connect().cursor()
-    cur.execute('SELECT word FROM words WHERE story_id=%s;',(story_num,))
+    cur.execute('SELECT word FROM words WHERE story_id=%s ORDER BY id;',(story_num,))
     words_from_db = cur.fetchall()
 
     # create string from queried words
@@ -71,13 +71,7 @@ def archive_story(story_num):
     db = connect()
     cur = db.cursor()
 
-    # format story into string
-    cur.execute('SELECT word FROM words WHERE story_id=%s;',(str(story_num),))
-    words_from_db = cur.fetchall()
-    words = []
-    for word in words_from_db:
-        words.append(word[0])
-    STORY = ' '.join(words)
+    STORY = get_current_story(story_num)
 
     # insert story into story table and make a new blank story
     cur.execute('UPDATE stories SET date_time=%s, story_content=%s WHERE id=%s;',(datetime.datetime.now().strftime("%B %d, %Y"),STORY,story_num))
