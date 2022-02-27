@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(230, 220, 210);
+    background-color: rgb(255, 245, 235);
     font-family: 'Courier New', Courier, monospace;
     font-weight: 400;
     text-align: left;
@@ -40,7 +40,7 @@ span {
 }
 
 input {
-    background-color: rgb(230, 220, 210);
+    background-color: rgb(255, 245, 235);
     border: none;
     font-family: 'Courier New', Courier, monospace;
     font-size: 22px;
@@ -56,12 +56,12 @@ input:focus {
 }
 
 button {
-    border: 1px solid rgb(75,95,95);
+    border: 1px solid rgb(27, 82, 61);
     background-color: rgb(250,255,255);
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    color: rgb(0,80,80);
+    color:  rgb(77, 132, 111);
     margin: -25px 0px 0px 5px;
     box-shadow: 2px 2px 2px rgb(85, 85, 85);
     transition: box-shadow .5s, color .5s;
@@ -83,7 +83,7 @@ button:hover {
 
 .message > p {
     font-family: Arial, Helvetica, sans-serif;
-    color: rgb(115, 115, 115);
+    color: rgb(77, 132, 111);
     text-indent: 0%;
     margin-top: -10px;
     transition: all .3s;
@@ -92,13 +92,16 @@ button:hover {
 .date {
     text-indent: 0%;
     font-size: 14pt;
-    margin-top: -8px;
+    margin-top: -14px;
+    margin-bottom: -6px;
     font-weight: 500;
+    color: rgb(77, 132, 111)
 }
 
 h2 {
-    font-size: 22pt;
+    font-size: 20pt;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    text-decoration: underline;
 }
 /* .stories button {
     height: 110px;
@@ -107,9 +110,9 @@ h2 {
 } */
 
 .about {
-    background-color: rgba(250,255,250,.6);
+    background-color: rgba(117, 172, 151, 0.3);
     max-width: 50%;
-    min-width: 350px;
+    min-width: 300px;
     margin: 50px auto auto auto;
     padding: 2px 20px 5px 20px;
 }
@@ -125,19 +128,19 @@ h3 {
 
 a {
     text-decoration: none;
-    color: teal;
+    color: rgb(77, 132, 111);
     transition: color .5s;
 }
 
 a:hover {
     text-decoration: none;
-    color: rgb(0, 85, 85);
+    color: rgb(117, 172, 151);
     /* transition: color .5s; */
 }
 
 nav {
     border-bottom: 1px solid rgb(225,230,225);
-    background-color: rgba(250,255,250,.5);
+    background-color: rgba(117, 172, 151, 0.9);
     margin: 0px;
     padding: 0px;
 }
@@ -165,7 +168,7 @@ nav {
 }
 
 .nav-item > a:hover {
-    color: teal;
+    color: rgb(245, 255, 245);
 }
 
 footer {
