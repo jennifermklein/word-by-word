@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded',function() {
     setInterval(updateStory, 500);
 
     function resetErrorMessage(){
-        errorMessage.style.color = "rgb(115, 115, 115)";
+        errorMessage.style.color = "rgb(77, 132, 111)";
         errorMessage.innerHTML = "Type a single word and press enter to submit";
     }
 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded',function() {
         axios.get('/session_error')
             .then(function(response) {
                 if (response.data === 'True') {
-                    errorMessage.style.color = "#D8000C";
+                    errorMessage.style.color = "rgb(255,80,50)";
                     errorMessage.innerHTML = "It's someone else's turn to add a word!";
                     setInterval(resetErrorMessage, 10000);
                 }
