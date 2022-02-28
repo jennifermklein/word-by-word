@@ -100,11 +100,6 @@ h2 {
     font-size: 22pt;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
-/* .stories button {
-    height: 110px;
-    width: 85px;
-    margin: 10px 5px 0px 5px;
-} */
 
 .about {
     background-color: rgba(250,255,250,.6);
@@ -132,7 +127,6 @@ a {
 a:hover {
     text-decoration: none;
     color: rgb(0, 85, 85);
-    /* transition: color .5s; */
 }
 
 nav {
@@ -181,20 +175,3 @@ footer > p {
     margin: 0px;
     font-size: 12px;
 }
-
-/* @media (max-device-width:768px) {
-    .about {
-        font-size: 16px;
-        min-width: none;
-        max-width: none;
-    }
-}
-
-@media (max-device-width:852px) {
-    .about {
-        margin: 20px;
-        min-width: 100px;
-        max-width: 90%;
-        font-size: 16px;
-    }
-} */

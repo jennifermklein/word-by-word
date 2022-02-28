@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded',function() {
     const story = document.querySelector('#curr_story');
     const addWord = document.querySelector('#add_word');
     const errorMessage = document.querySelector('#apology');
-    // const endStory = document.querySelector('#end_story');
     
     function updateStory () {
         axios.get('/story')
@@ -10,12 +9,6 @@ document.addEventListener('DOMContentLoaded',function() {
                 if (response.data) {
                     story.innerHTML = response.data;
                 }
-                // if (!response.data) {
-                //     document.querySelector('#end_story').style.visibility = 'hidden';
-                // }
-                // else {
-                //     document.querySelector('#end_story').style.visibility = 'visibile';
-                // }
             })
     }
     
@@ -40,19 +33,6 @@ document.addEventListener('DOMContentLoaded',function() {
                 // handle error
                 console.log(error);
             })
-        // if (event.code === 'Enter') {
-        //     axios.get('/dict_error')
-        //     .then(function(response) {
-        //         if (response.data === 'False') {
-        //             errorMessage.style.display = 'inline';
-        //             errorMessage.innerHTML = "Word not found in dictionary";
-        //         }
-        //     })
-        //     .catch(function (error) {
-        //         // handle error
-        //         console.log(error);
-        //     })
-        // }
     })
     
 });
